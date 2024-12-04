@@ -9,12 +9,11 @@ import "src/Address.sol";
  * @title Reference implementation of the ERC223 standard token.
  */
 contract ERC223Token is IERC223 {
-
-    string  private _name;
-    string  private _symbol;
-    uint8   private _decimals;
+    string private _name;
+    string private _symbol;
+    uint8 private _decimals;
     uint256 private _totalSupply;
-    
+
     mapping(address => uint256) private balances; // List of user balances.
 
     /**
@@ -26,19 +25,16 @@ contract ERC223Token is IERC223 {
      * All three of these values are immutable: they can only be set once during
      * construction.
      */
-     
-    constructor(string memory new_name, string memory new_symbol, uint8 new_decimals)
-    {
-        _name     = new_name;
-        _symbol   = new_symbol;
+    constructor(string memory new_name, string memory new_symbol, uint8 new_decimals) {
+        _name = new_name;
+        _symbol = new_symbol;
         _decimals = new_decimals;
     }
 
     /**
      * @dev Returns the name of the token.
      */
-    function name() public view virtual override returns (string memory)
-    {
+    function name() public view virtual override returns (string memory) {
         return _name;
     }
 
@@ -46,8 +42,7 @@ contract ERC223Token is IERC223 {
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.
      */
-    function symbol() public view virtual override returns (string memory)
-    {
+    function symbol() public view virtual override returns (string memory) {
         return _symbol;
     }
 
@@ -64,33 +59,28 @@ contract ERC223Token is IERC223 {
      * no way affects any of the arithmetic of the contract, including
      * {IERC223-balanceOf} and {IERC223-transfer}.
      */
-    function decimals() public view virtual override returns (uint8)
-    {
+    function decimals() public view virtual override returns (uint8) {
         return _decimals;
     }
 
     /**
      * @dev See {IERC223-totalSupply}.
      */
-    function totalSupply() public view override returns (uint256)
-    {
+    function totalSupply() public view override returns (uint256) {
         return _totalSupply;
     }
 
-    
     /**
      * @dev Returns balance of the `_owner`.
      *
      * @param _owner   The address whose balance will be returned.
      * @return balance Balance of the `_owner`.
      */
-    function balanceOf(address _owner) public view override returns (uint256)
-    {
+    function balanceOf(address _owner) public view override returns (uint256) {
         return balances[_owner];
     }
-    
 
-    function _mint(uint amount) public{
+    function _mint(uint256 amount) public {
         balances[msg.sender] += amount;
     }
 
@@ -105,13 +95,12 @@ contract ERC223Token is IERC223 {
      * @param _value Amount of tokens that will be transferred.
      * @param _data  Transaction metadata.
      */
-    function transfer(address _to, uint _value, bytes calldata _data) public override returns (bool success)
-    {
+    function transfer(address _to, uint256 _value, bytes calldata _data) public override returns (bool success) {
         // Standard function transfer similar to ERC20 transfer with no _data .
         // Added due to backwards compatibility reasons .
         balances[msg.sender] = balances[msg.sender] - _value;
         balances[_to] = balances[_to] + _value;
-        if(Address.isContract(_to)) {
+        if (Address.isContract(_to)) {
             // It is subjective if the contract call must fail or not
             // when ERC-223 token transfer does not trigger the `tokenReceived` function
             // by the standard if the receiver did not explicitly rejected the call
@@ -121,7 +110,7 @@ contract ERC223Token is IERC223 {
         emit Transfer(msg.sender, _to, _value, _data);
         return true;
     }
-    
+
     /**
      * @dev Transfer the specified amount of tokens to the specified address.
      *      This function works the same with the previous one
@@ -131,22 +120,20 @@ contract ERC223Token is IERC223 {
      * @param _to    Receiver address.
      * @param _value Amount of tokens that will be transferred.
      */
-    function transfer(address _to, uint _value) public override returns (bool success)
-    {
+    function transfer(address _to, uint256 _value) public override returns (bool success) {
         bytes memory _empty = hex"00000000";
         balances[msg.sender] = balances[msg.sender] - _value;
         balances[_to] = balances[_to] + _value;
-        if(Address.isContract(_to)) {
+        if (Address.isContract(_to)) {
             IERC223Recipient(_to).tokenReceived(msg.sender, _value, _empty);
         }
         emit Transfer(msg.sender, _to, _value, _empty);
         return true;
     }
 
-
-    function transferFrom(address from, address to, uint256 value) public returns(bool success){
+    function transferFrom(address from, address to, uint256 value) public returns (bool success) {
         balances[from] -= value;
-        balances[to] += value; 
+        balances[to] += value;
         return true;
     }
 }

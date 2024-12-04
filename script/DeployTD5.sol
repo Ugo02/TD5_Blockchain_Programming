@@ -4,9 +4,8 @@ pragma solidity ^0.8.0;
 import "forge-std/Script.sol";
 import "src/TD5.sol";
 
-
-contract DeployTokenScript is Script{
-    function run() external{
+contract DeployTokenScript is Script {
+    function run() external {
         vm.startBroadcast();
 
         TD5_BP_ERC20 token = new TD5_BP_ERC20();

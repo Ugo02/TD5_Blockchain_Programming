@@ -1,66 +1,20 @@
-## Foundry
+## TD5_Blockchain_Programming
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Tasks
 
-Foundry consists of:
+    • Install Foundry & create a Foundry project 
+    • Create an ERC20 token contract 
+        • Chose a ticker
+        • Chose a decimal number
+    • Create an ERC223 token contract 
+        • Same as above
+    • Create an ERC721 token contract 
+    • Create a migration for all contracts 
+    • Implement a function to mint ERC721 with your ERC20 
+    • Implement a function to mint ERC721 with your ERC223 via the transfer function 
+    • Create tests to showcase buy of ERC721 with your ERC20 
+    • Create tests to showcase buy of ERC721 with your ERC223 
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Execution
 
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+You can run the code by running : forge script, forge build and forge test.
